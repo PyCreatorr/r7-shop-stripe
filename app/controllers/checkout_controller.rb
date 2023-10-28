@@ -14,7 +14,7 @@ class CheckoutController < ApplicationController
             #     quantity: 1
             # }],
             metadata: {
-                order_id: parsedOrder._id,
+                # order_id: parsedOrder._id,
                 product_id: product.id
             },
             line_items: [{
