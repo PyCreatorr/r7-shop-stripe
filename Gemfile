@@ -73,3 +73,5 @@ group :test do
   gem "selenium-webdriver"
 
 end
+
+gem "devise-tailwinded", "~> 0.1.5"
