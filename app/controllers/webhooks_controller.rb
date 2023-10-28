@@ -24,7 +24,7 @@ class WebhooksController < ApplicationController
   
     # Handle the event
     case event.type
-    when 'payment_intent.created'
+    when 'checkout.session.completed'
       session = event.data.object # contains a Stripe::PaymentIntent
       @product = Product.find(session.metadata.product_id)
       @product.increment!(:sales_count)
@@ -41,3 +41,4 @@ class WebhooksController < ApplicationController
       
     end
 end
+
