@@ -1,0 +1,9 @@
+console.log('js work create_js_erb');
+
+const stripe = Stripe("<%= Rails.application.credentials[:stripe][:public] %>");
+
+console.log('@session.id =', @session.id);
+
+stripe.redirectToCheckout({
+    sessionId: '<%= @session.id %>'
+  });

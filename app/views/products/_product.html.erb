@@ -12,6 +12,15 @@
   <% if action_name != "show" %>
     <%= link_to "Show this product", product, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
     <%= link_to "Edit this product", edit_product_path(product), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+    <%= button_to "Payment", checkout_create_path, params:{ id: product.id }, 
+    # remote:true, 
+    # method: :post,
+    data: { controller: "checkout", action: "turbo:click->checkout#stripeCheckout" },
+    data: {turbo: false},
+    #remote: true,
+    #data: {turbo_method: :post},
+    # remote: true, data: {turbo: false}
+    class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
     <hr class="mt-6">
   <% end %>
 </div>
