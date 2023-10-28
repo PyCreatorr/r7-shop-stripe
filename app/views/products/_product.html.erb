@@ -6,7 +6,11 @@
 
   <p class="my-5">
     <strong class="block font-medium mb-1">Price:</strong>
-    <%= product.price %>
+    <%= number_to_currency(product.price) %>
+  </p>
+    <p class="my-5">
+    <strong class="block font-medium mb-1">Sales count:</strong>
+    <%= product.sales_count %>
   </p>
 
   <% if action_name != "show" %>
@@ -15,7 +19,7 @@
     <%= button_to "Payment", checkout_create_path, params:{ id: product.id }, 
     # remote:true, 
     # method: :post,
-    data: { controller: "checkout", action: "turbo:click->checkout#stripeCheckout" },
+    # data: { controller: "checkout", action: "turbo:click->checkout#stripeCheckout" },
     data: {turbo: false},
     #remote: true,
     #data: {turbo_method: :post},

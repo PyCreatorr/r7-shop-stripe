@@ -85,6 +85,8 @@ test:
 #
 production:
   <<: *default
-  database: shoplify_production
-  username: shoplify
-  password: <%= ENV["SHOPLIFY_DATABASE_PASSWORD"] %>
+  database: <%= ENV["DB_PRODUCTION_DATABASE"] %>
+  username: <%= ENV["DB_PRODUCTION_USER"] %>
+  password: <%= ENV["DB_PRODUCTION_PASSWORD"] %>
+  host: <%= ENV["DB_PRODUCTION_HOST"] %>
+  port: <%= ENV["DB_PRODUCTION_PORT"] %>
