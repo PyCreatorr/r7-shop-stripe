@@ -25,8 +25,8 @@ class WebhooksController < ApplicationController
     # Handle the event
     case event.type
     when 'payment_intent.created'
-      payment_intent = event.data.object # contains a Stripe::PaymentIntent
-      @product = Product.find_by(price: session.amount_total)
+      session = event.data.object # contains a Stripe::PaymentIntent
+      @product = Product.find(session.metadata.product_id)
       @product.increment!(:sales_count)
       puts 'PaymentIntent was successful!'
     when 'payment_method.attached'
@@ -38,9 +38,6 @@ class WebhooksController < ApplicationController
     end
   
     status 200
-  
       
     end
-
-
 end
