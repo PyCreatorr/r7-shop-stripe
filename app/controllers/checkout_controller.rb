@@ -13,6 +13,10 @@ class CheckoutController < ApplicationController
             #     currency: 'usd',
             #     quantity: 1
             # }],
+            metadata: {
+                order_id: parsedOrder._id,
+                product_id: product.id
+            },
             line_items: [{
                 price_data: {
                   currency: 'usd',
