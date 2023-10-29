@@ -12,11 +12,26 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
+  <!-- <body>
     <%= link_to 'Products', products_path %>
     <hr/>
     <main class="container mx-auto mt-28 px-5 flex">
+        <p class="notice"><%= notice %></p> 
+       <p class="alert"><%= alert %></p>
       <%= yield %>
     </main>
+  </body> -->
+
+  <body>
+    <div class="min-h-full">
+      <%= render 'layouts/navbar' %>
+      <%#= render 'layouts/header', header: request.path == '/users/edit' ? 'Profile' : "Dashboard"  %>
+      <main class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+      <%= render "layouts/flash"%>      
+        <%= yield %>
+      </main>
+      <%= render partial: "layouts/footer" %>
+    </div>
   </body>
+
 </html>
