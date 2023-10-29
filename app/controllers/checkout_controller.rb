@@ -2,10 +2,14 @@ class CheckoutController < ApplicationController
     def create
         # binding.break
 
+        if (current_user.stripe_customer_id.present?)
+          customer = Stripe::Customer.retrieve(current_user.stripe_customer_id)
+        end 
         product = Product.find(params[:id])
         # copied and edited from https://stripe.com/docs/payments/checkout/migration
         # we eill get the product data from our db from params from views/products/_product.html.erb
         @session = Stripe::Checkout::Session.create({
+            customer: current_user.stripe_customer_id,
             payment_method_types: ['card'],
             # line_items: [{
             #     name: product.name,
@@ -31,7 +35,7 @@ class CheckoutController < ApplicationController
               }],
             mode: 'payment',
             success_url: root_url,
-            cancel_url: root_url,
+            cancel_url: root_url
           });
         # respond_to do |format|
         #     # format.js
