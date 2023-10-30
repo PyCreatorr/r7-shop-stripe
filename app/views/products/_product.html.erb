@@ -1,13 +1,22 @@
 <div id="<%= dom_id product %>">
   <p class="my-5">
     <strong class="block font-medium mb-1">Name:</strong>
-    <%= product%>
+    <%= product %>
   </p>
-
   <p class="my-5">
     <strong class="block font-medium mb-1">Price:</strong>
     <%= number_to_currency(product.price.to_f/100) %>
   </p>
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Currency:</strong>
+    <%= product.currency %>
+  </p>
+  <% if product.stripe_product_id %>
+    <p class="my-5">
+      <strong class="block font-medium mb-1">Stripe product id:</strong>
+      <%= product.stripe_product_id %>
+    </p>
+  <% end %>
     <p class="my-5">
     <strong class="block font-medium mb-1">Sales count:</strong>
     <%= product.sales_count %>
