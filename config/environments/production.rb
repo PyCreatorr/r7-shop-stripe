@@ -2,7 +2,11 @@ require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-
+  # config.action_mailer.default_url_options = { host: 'https://rails-7-shoplify-e563576662a5.herokuapp.com/', port: 3000 }
+    # Mailer settings (SENDGRID)
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.default_url_options = { :host => 'https://rails-7-shoplify-e563576662a5.herokuapp.com', :protocol => 'https' }
+    config.action_mailer.default_options = {:from => "support@devekma.fun"}
   # Code is not reloaded between requests.
   config.cache_classes = true
 
