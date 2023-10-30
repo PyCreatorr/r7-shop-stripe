@@ -17,6 +17,12 @@
       <%= product.stripe_product_id %>
     </p>
   <% end %>
+  <% if product.stripe_price_id %>
+    <p class="my-5">
+      <strong class="block font-medium mb-1">Stripe price id:</strong>
+      <%= product.stripe_price_id %>
+    </p>
+  <% end %>
     <p class="my-5">
     <strong class="block font-medium mb-1">Sales count:</strong>
     <%= product.sales_count %>
