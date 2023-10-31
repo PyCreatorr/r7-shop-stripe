@@ -28,27 +28,16 @@ class WebhooksController < ApplicationController
       case event.type
       when 'checkout.session.completed'
             session = event.data.object 
-            #@product = Product.find_by("stripe_product_id": session.metadata.product_id)
-            #@product.increment!(:sales_count)
-          
-            #session_with_expand = Stripe::Checkout::Session.retrieve({ id: session.id, expand: ["line_items"]})
             session_with_expand = Stripe::Checkout::Session.retrieve({ id: session.id, expand: ["line_items"]})
-            p session_with_expand
-            # session_with_expand.line_items.data.each do |line_item|
-            #   product = Product.find_by(stripe_product_id: line_item.price.product)
-            #   product.increment!(:sales_count)
-            # end
-            @product = Product.find_by("stripe_product_id": session.metadata.product_id)
-            if @product.blank?
-              puts `Product with given stripe_product_id: #{session.metadata.product_id} wouldnt be found in the db`
-              return status 200 
+            session_with_expand.line_items.data.each do |line_item| 
+              product = Product.find_by("stripe_product_id": line_item.price.product)
+              product.increment!(:sales_count) if product.present? # increment saves the product in db also               
             end
-            p session.metadata.product_id
-            @product.increment!(:sales_count)
+      else 
+        puts "Unhandled event type: #{event.type}"
+      end        
           
-      end
-          
-          puts 'PaymentIntent was successful!'
+      puts 'PaymentIntent was successful!'
       # when 'payment_method.attached'
       #   payment_method = event.data.object # contains a Stripe::PaymentMethod
       #   puts 'PaymentMethod was attached to a Customer!'
@@ -56,11 +45,7 @@ class WebhooksController < ApplicationController
       # else
       #   puts "Unhandled event type: #{event.type}"
       # end
-    
-        # return status 200
-        render status: 200, json: { message: 'success' }
-        #return render json: { message: 'success' }
-      
+      render status: 200, json: { message: 'success' }
     end
 end
 
