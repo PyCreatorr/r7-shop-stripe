@@ -45,7 +45,13 @@ class CheckoutController < ApplicationController
         #         #locals: {stock_item: stock, allowed: true, flash_notice: "#{stock.name} was successfully added to your data!" }
         #     }
         # end
-        redirect_to @session.url, allow_other_host: true
+        
+        #redirect_to @session.url, allow_other_host: true
+
+        render turbo_stream: turbo_stream.append(
+          :reload,
+          partial: 'shared/reload_script',
+          locals: { redirect_url: @session.url })
     end
 
     def success
@@ -54,7 +60,7 @@ class CheckoutController < ApplicationController
       #   product = Product.find_by("stripe_product_id": line_item.price.product)
       #   product.increment!(:sales_count) if product.present? # increment saves the product in db also       
       # end
-      # redirect_to products_path
+      redirect_to products_path
     end
 
     def cancel
