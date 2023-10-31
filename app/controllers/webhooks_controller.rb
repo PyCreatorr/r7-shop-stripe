@@ -40,7 +40,7 @@ class WebhooksController < ApplicationController
             # end
             @product = Product.find_by("stripe_product_id": session.metadata.product_id)
             if @product.blank?
-              puts `Product with given stripe_product_id: #{session.metadata.product_id} is not exists in the db`
+              puts `Product with given stripe_product_id: #{session.metadata.product_id} wouldnt be found in the db`
               return status 200 
             end
             p session.metadata.product_id
@@ -58,7 +58,7 @@ class WebhooksController < ApplicationController
       # end
     
         status 200
-        render json: { message: 'success' }
+        return render json: { message: 'success' }
       
     end
 end
