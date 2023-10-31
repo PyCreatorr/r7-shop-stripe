@@ -33,6 +33,7 @@
     <%= link_to "Edit this product", edit_product_path(product), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
     <%= button_to "Payment", checkout_create_path, params:{ id: product.id },
     data: { disable_with: "validating .."},
+    data: { controller: "payment-button", action: "click->payment-button#handleClick"},
     # remote:true, 
     # method: :post,
     # data: { controller: "checkout", action: "turbo:click->checkout#stripeCheckout" },
