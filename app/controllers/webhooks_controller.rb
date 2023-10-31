@@ -31,6 +31,7 @@ class WebhooksController < ApplicationController
             #@product = Product.find_by("stripe_product_id": session.metadata.product_id)
             #@product.increment!(:sales_count)
           
+            #session_with_expand = Stripe::Checkout::Session.retrieve({ id: session.id, expand: ["line_items"]})
             session_with_expand = Stripe::Checkout::Session.retrieve({ id: session.id, expand: ["line_items"]})
             p session_with_expand
             # session_with_expand.line_items.data.each do |line_item|
@@ -38,6 +39,10 @@ class WebhooksController < ApplicationController
             #   product.increment!(:sales_count)
             # end
             @product = Product.find_by("stripe_product_id": session.metadata.product_id)
+            if @product.blank?
+              puts `Product with given stripe_product_id: #{session.metadata.product_id} is not exists in the db`
+              return status 200 
+            end
             p session.metadata.product_id
             @product.increment!(:sales_count)
           
