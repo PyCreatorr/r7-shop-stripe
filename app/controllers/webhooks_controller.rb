@@ -57,8 +57,9 @@ class WebhooksController < ApplicationController
       #   puts "Unhandled event type: #{event.type}"
       # end
     
-        status 200
-        return render json: { message: 'success' }
+        # return status 200
+        render status: 200, json: { message: 'success' }
+        #return render json: { message: 'success' }
       
     end
 end
