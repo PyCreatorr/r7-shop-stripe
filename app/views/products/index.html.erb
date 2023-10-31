@@ -13,35 +13,5 @@
     <%= render @products %>
   </div>
 
-  <hr>
-  <% if params[:session_id].present? %>
-    <%= params[:session_id]%>
-    <% @session = Stripe::Checkout::Session.retrieve(params[:session_id]) %>
-    <%= @session.payment_intent %>
-    <hr>
-    <hr>
-    <br><br>
-    <%= Stripe::PaymentIntent.retrieve(@session.payment_intent) %>
-    <br><br><br>
-
-    <hr>
-    <hr>
-    <% @session_with_expand = Stripe::Checkout::Session.retrieve({
-      id: params[:session_id], expand: ['payment_intent', 'line_items']
-      }) %>
-
-      <%= @session_with_expand.line_items.data %>
-        <hr>
-    <hr>
-    <% @session_with_expand.line_items.data.each do |line_item| %>
-      line_item: <%= line_item %><br>
-      description:  <%= line_item.description %><br>
-      price_id: <%= line_item.price.id %><br>
-      price_product: <%= line_item.price.product %><br>
-
-    <% end %>
-  <% end %>
- 
-
   <br><br><br>
 </div>

@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   # resources :checkout, only: [:create]
   post "checkout/create", to: "checkout#create"
   resources :webhooks, only: [:create]
+  get "success", to: "checkout#success"
+  get "cancel", to: "checkout#cancel"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")

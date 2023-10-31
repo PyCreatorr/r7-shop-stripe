@@ -35,9 +35,10 @@ class CheckoutController < ApplicationController
                 quantity: 1,
               }],
             mode: 'payment',
-            success_url: root_url + "?session_id={CHECKOUT_SESSION_ID}",
-            cancel_url: root_url
+            success_url: success_url + "?session_id={CHECKOUT_SESSION_ID}",
+            cancel_url: cancel_url
           });
+
         # respond_to do |format|
         #     # format.js
         #     format.turbo_stream { render "checkout/create"
@@ -45,5 +46,11 @@ class CheckoutController < ApplicationController
         #     }
         # end
         redirect_to @session.url, allow_other_host: true
+    end
+
+    def success
+    end
+
+    def cancel
     end
 end
