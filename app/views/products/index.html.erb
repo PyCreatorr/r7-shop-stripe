@@ -12,19 +12,21 @@
   <%# <div id="products" class="min-w-full">
     <%= render @products %>
   <%# </div> %>
-          <% @cart.each do |product| %>
-            <%= product.name%>
-          <%end%>
+      <% if @cart.present? %>
+        <%= @cart.collect { |item| item.to_builder.attributes! } %>
+        <%= button_to "Payment", checkout_create_path, data: { disable_with: "validating .."}, data: { controller: "payment-button", action: "click->payment-button#handleClick"},
+        class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
+      <% end %>
 
   <div class="bg-white">
-  <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-    <h2 class="text-2xl font-bold tracking-tight text-gray-900">Customers also purchased</h2>
+    <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+      <h2 class="text-2xl font-bold tracking-tight text-gray-900">Customers also purchased</h2>
 
-    <div id="products" class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-      <%= render @products %>
+      <div id="products" class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+        <%= render @products %>
+      </div>
+
     </div>
-
-  </div>
 </div>
 
 

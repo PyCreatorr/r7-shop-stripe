@@ -5,35 +5,21 @@ class CheckoutController < ApplicationController
         if (current_user.stripe_customer_id.present?)
           customer = Stripe::Customer.retrieve(current_user.stripe_customer_id)
         end 
-        # price_id = price = Stripe::Price.search({ 
-        #   query: `product:\'${product.stripe_product_id}\'` 
-        #  })
-        product = Product.find(params[:id])
 
-        #price = Stripe::Product.retrieve(product.stripe_product_id)
+        #product = Product.find(params[:id])
 
-        # copied and edited from https://stripe.com/docs/payments/checkout/migration
-        # we eill get the product data from our db from params from views/products/_product.html.erb
+
         @session = Stripe::Checkout::Session.create({
             customer: current_user.stripe_customer_id,
             payment_method_types: ['card'],
-            metadata: {
-                # order_id: parsedOrder._id,
-                product_id: product.stripe_product_id
-            },
-            line_items: [{
-                # price_data: {
-                  price: product.stripe_price_id,
-                  # currency: product.price,
-                  # unit_amount: product.price,
-                  # product_data: {
-                  #   name: product.name,
-                    # description: 'Comfortable cotton t-shirt',
-                    # images: ['https://example.com/t-shirt.png'],
-                  # },
-                # },
-                quantity: 1,
-              }],
+
+            # line_items: [{
+            #   @cart.each do |product| {               
+            #     price: product.stripe_price_id.to_s,
+            #     quantity: 1 }
+              
+            #   }],
+            line_items: @cart.collect { |item| item.to_builder.attributes! },
             mode: 'payment',
             success_url: success_url + "?session_id={CHECKOUT_SESSION_ID}",
             cancel_url: cancel_url
