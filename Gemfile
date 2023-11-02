@@ -81,3 +81,5 @@ gem 'stripe'
 gem "rack-cors"
 
 gem "devise", "~> 4.9"
+
+gem 'money-rails'
