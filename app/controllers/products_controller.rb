@@ -58,9 +58,19 @@ class ProductsController < ApplicationController
 
   # write to the session cart
   def add_to_cart
+    cart = session[:cart]
     id = params[:id].to_i
-    session[:cart] << id unless session[:cart].include?(id)
-    redirect_to products_path
+    new_currency = params[:new_currency]    
+    if cart.count == 0
+      session[:cart] << id unless session[:cart].include?(id)
+      redirect_to products_path
+    elsif cart.count >= 1 && new_currency == Product.find(cart[cart.count-1]).currency
+      session[:cart] << id unless session[:cart].include?(id)
+      redirect_to products_path      
+    else
+      flash[:danger]="You cannot add the products with the different currencies!"
+      redirect_to products_path
+    end
   end
 
   # delete product id from the session

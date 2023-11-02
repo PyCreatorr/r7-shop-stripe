@@ -38,7 +38,7 @@
 
           <%= button_to "Remove from cart", remove_from_cart_path(product), method: :delete, data:{"turbo-method": :delete, turbo_confirm: "Are you sure?"} %>
         <% else %>
-          <%= button_to "Add to cart", add_to_cart_path(product) %>
+          <%= button_to "Add to cart", add_to_cart_path(product), params: {"id":product.id, "new_currency":product.currency} %>
         <% end%>
 
     <% end %>

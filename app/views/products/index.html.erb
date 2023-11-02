@@ -15,6 +15,11 @@
   <%= @cart %><hr><hr>
       <% if @cart.present? %>
 
+      <% if @cart.count > 1 && @cart[@cart.count-2].currency != @cart[@cart.count-1].currency %>
+      <%=  @cart[@cart.count-1].currency %>
+      <%= flash.now[:danger]= "You cannot add products with different currencies! "%>
+      <%end%>
+
         <%= @cart.map { |item| item.to_builder.attributes! } %>
         <%= button_to "Payment", checkout_create_path, data: { disable_with: "validating .."}, data: { controller: "payment-button", action: "click->payment-button#handleClick"},
         class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
