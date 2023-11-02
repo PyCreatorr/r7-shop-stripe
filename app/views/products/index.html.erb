@@ -12,8 +12,10 @@
   <%# <div id="products" class="min-w-full">
     <%= render @products %>
   <%# </div> %>
+  <%= @cart %><hr><hr>
       <% if @cart.present? %>
-        <%= @cart.collect { |item| item.to_builder.attributes! } %>
+
+        <%= @cart.map { |item| item.to_builder.attributes! } %>
         <%= button_to "Payment", checkout_create_path, data: { disable_with: "validating .."}, data: { controller: "payment-button", action: "click->payment-button#handleClick"},
         class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
       <% end %>
