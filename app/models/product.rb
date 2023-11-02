@@ -29,15 +29,22 @@ class Product < ApplicationRecord
     end
 
     after_update :create_and_assign_new_stripe_price, if: :saved_change_to_price?
-    after_update :create_and_assign_new_stripe_price, if: :saved_change_to_currency?
+    # after_update :create_and_assign_new_stripe_price, if: :saved_change_to_currency?
+    #after_update :update_and_assign_new_name, if: :saved_change_to_name?
+    # after_update :update_and_assign_new_name, if: :saved_changes.keys
     
     def create_and_assign_new_stripe_price
       price = Stripe::Price.create({ 
         unit_amount: self.price,  
         currency: self.currency,    
         product: self.stripe_product_id
-      })      
-      update({ stripe_price_id: price.id })      
+      })
+      #product = Stripe::Product.update( self.stripe_product_id , name: self.name)
+      update({ stripe_price_id: price.id})      
+    end
+
+    def update_and_assign_new_name
+      product = Stripe::Product.update( self.stripe_product_id, name: self.name)  
     end
 
 
